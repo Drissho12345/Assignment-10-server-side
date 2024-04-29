@@ -41,6 +41,13 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result)
     })
+    // update card
+    app.get('/spots/:id',async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id:new ObjectId(id)}
+      const result = await usersCollection.findOne(query);
+      res.send(result)
+    })
 
     app.get('/singleCard/:id',async(req,res)=>{
       const result = await usersCollection.findOne({_id:new ObjectId(req.params.id)});
@@ -62,6 +69,35 @@ async function run() {
       const user = req.body;
       console.log('new user',user);
       const result = await usersCollection.insertOne(user);
+      res.send(result)
+    })
+    // update
+    app.put('/spots/:id',async(req,res)=>{
+      const id = req.params.id;
+      const filter = {_id:new ObjectId(id)}
+      const options = {upsert: true};
+      const updateSpots =req.body;
+      const spots = {
+        $set: {
+          text:updateSpots.text,
+          name:updateSpots.name,
+          url:updateSpots.url,
+          price:updateSpots.price,
+          TravelTime:updateSpots.TravelTime,
+          seasonality:updateSpots.seasonality,
+          Total:updateSpots.Total,
+          Location:updateSpots.Location,
+          description:updateSpots.description,
+        }
+      }
+      const result =await usersCollection.updateOne(filter,spots);
+      res.send(result)
+    })
+
+    app.delete('/myCardDelete/:id',async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id:new ObjectId(id)}
+      const result = await usersCollection.deleteOne(query);
       res.send(result)
     })
 
