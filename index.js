@@ -12,7 +12,6 @@ app.use(cors());
 app.use(express.json())
 
 
-// ..............................
 
 const uri = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.zbgw6hh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 console.log(uri);
@@ -59,7 +58,6 @@ async function run() {
     })
 
     app.get("/mySpots/:email", async (req, res) => {
-      // console.log(req.params.email);
       const result = await usersCollection.find({ email: req.params.email }).toArray();
       res.send(result)
     })
@@ -71,6 +69,7 @@ async function run() {
       const result = await usersCollection.insertOne(user);
       res.send(result)
     })
+
     // update
     app.put('/spots/:id',async(req,res)=>{
       const id = req.params.id;
@@ -113,7 +112,7 @@ async function run() {
 run().catch(console.dir);
 
 
-// ...................................
+
 
 
 app.get('/', (req,res)=>{
