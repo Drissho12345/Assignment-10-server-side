@@ -91,7 +91,7 @@ async function run() {
       const result =await usersCollection.updateOne(filter,spots);
       res.send(result)
     })
-
+    // delete operation
     app.delete('/myCardDelete/:id',async(req,res)=>{
       const id = req.params.id;
       const query = {_id:new ObjectId(id)}
